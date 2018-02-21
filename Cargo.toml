@@ -1,0 +1,6 @@
+[package]
+name = "actix-web-juniper-trying"
+version = "0.1.0"
+authors = ["Roman Frołow <rofrol@gmail.com>"]
+
+[dependencies]

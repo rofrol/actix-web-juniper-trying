@@ -1,0 +1,4 @@
+[[package]]
+name = "actix-web-juniper-trying"
+version = "0.1.0"
+
