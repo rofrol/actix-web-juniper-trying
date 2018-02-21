@@ -1,4 +1,3 @@
-#[macro_use]
 extern crate lazy_static;
 
 #[macro_use]
@@ -7,7 +6,6 @@ extern crate slog_term;
 
 extern crate actix;
 extern crate actix_web;
-use actix::*;
 use actix_web::*;
 use actix_web::headers::ContentEncoding;
 
@@ -16,14 +14,14 @@ use futures::future::{Future, ok};
 
 extern crate serde_json;
 
-#[macro_use] extern crate juniper;
+extern crate juniper;
 
 use slog::*;
 use slog_term::*;
 
 use std::io;
 
-fn graphql_handle_post(mut request: HttpRequest) -> Box<Future<Item=HttpResponse, Error=actix_web::Error>> {
+fn graphql_handle_post(request: HttpRequest) -> Box<Future<Item=HttpResponse, Error=actix_web::Error>> {
 
     let plain: PlainSyncDecorator<io::Stdout> = PlainSyncDecorator::new(io::stdout());
     let logger: Logger = Logger::root(
@@ -54,7 +52,7 @@ fn graphql_handle_get(
     format!("request-parameter was {:?}", query_string).to_owned()
 }
 
-fn index(req: HttpRequest) -> &'static str {
+fn index(_: HttpRequest) -> &'static str {
     "Hello World!"
 }
 
@@ -84,7 +82,7 @@ fn main() {
     sys.run();
 }
 
-fn graphiql(req: HttpRequest) -> HttpResponse {
+fn graphiql(_: HttpRequest) -> HttpResponse {
     HttpResponse::Ok()
         .content_encoding(ContentEncoding::Identity) // Needed else actor panics at Option::unwrap
         .body(juniper::graphiql::graphiql_source("/test/graphql")).unwrap()
