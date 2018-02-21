@@ -17,7 +17,7 @@ fn graphiql(_: HttpRequest) -> HttpResponse {
 
 fn graphql_handle_post(request: HttpRequest) -> Box<Future<Item=HttpResponse, Error=actix_web::Error>> {
     println!("graphql_handle_post");
-    Box::new(request.urlencoded().and_then(move |params| {
+    Box::new(request.body().and_then(move |params| {
         ok(httpcodes::HTTPOk.with_body(format!("graphql_handle_post invoked with body {:?}", params)))
     }).map_err(actix_web::Error::from))
 }
